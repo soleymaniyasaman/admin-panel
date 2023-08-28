@@ -1,5 +1,7 @@
+import Login from "./features/identity/components/login";
+
 function App() {
-  return <p>hiii</p>;
+  return <Login />;
 }
 
 export default App;
