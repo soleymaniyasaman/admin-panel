@@ -10,6 +10,7 @@ import {
 import { useForm } from "react-hook-form";
 import { httpService } from "../../../core/http-service";
 import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 
 const Register = () => {
   const {
@@ -18,6 +19,7 @@ const Register = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
+
   const submitForm = useSubmit();
   const onSubmit = (data) => {
     const { confirmPassword, ...userData } = data; // sever confirmData from whole data
@@ -33,6 +35,8 @@ const Register = () => {
 
   const routerError = useRouteError(); // handle errors of the fetch api
 
+  const { t } = useTranslation(); // use t for multi language
+
   useEffect(() => {
     if (isSuccessOperation) {
       setTimeout(() => {
@@ -40,6 +44,7 @@ const Register = () => {
       }, 2000);
     }
   }, [isSuccessOperation]);
+
   return (
     <>
       <div className="text-center mt-4">
@@ -137,7 +142,8 @@ const Register = () => {
                   disabled={isSubmitting}
                   className="btn btn-lg btn-primary"
                 >
-                  {isSubmitting ? "در حال انجام عملیات" : "ثبت نام کنید"}
+                  {t("register.register")}
+                  {/* {isSubmitting ? "در حال انجام عملیات" : "ثبت نام کنید"} */}
                 </button>
               </div>
               {isSuccessOperation && (
