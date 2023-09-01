@@ -11,6 +11,7 @@ import { useForm } from "react-hook-form";
 import { httpService } from "../../../core/http-service";
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import { useAppContext } from "../../../context/app/app-context";
 
 const Register = () => {
   const {
@@ -36,6 +37,8 @@ const Register = () => {
   const routerError = useRouteError(); // handle errors of the fetch api
 
   const { t } = useTranslation(); // use t for multi language
+
+  const { theme } = useAppContext();
 
   useEffect(() => {
     if (isSuccessOperation) {
