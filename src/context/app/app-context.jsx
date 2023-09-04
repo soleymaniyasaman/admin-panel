@@ -24,6 +24,8 @@ const AppProvider = ({ children }) => {
     i18n.changeLanguage(state.language); // this changeLanguage is a method for i18n
     localStorage.setItem("language", state.language);
     document.body.dataset.direction = state.language === "fa" ? "rtl" : "ltr";
+    document.body.dataset.sidebarPosition =
+      state.language === "fa" ? "right" : "left"; // toggle left/right sidebar position in multiLanguage
   }, [state.language]);
 
   useEffect(() => {
