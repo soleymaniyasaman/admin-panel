@@ -33,7 +33,8 @@
     "validation": {
       "mobileRequired": "Mobile is required",
       "passwordRequired": "Password is required",
-      "IncorrectUserNameOrPassword": "The username or password is incorrect"
+      "IncorrectUserNameOrPassword": "The username or password is incorrect",
+      "mobileLength": "Mobile number must be 11 digits"
     }
   },
   "mainLayout": {
