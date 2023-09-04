@@ -10,6 +10,9 @@ const ChangeLanguage = () => {
   const { language, changeLanguage } = useAppContext();
 
   useEffect(() => {
+    setShow(false);
+  }, [language]);
+  useEffect(() => {
     // Clicking outside the dropdown closes the dropdown
     const checkIfClickOutside = (e) => {
       if (show && ref.current && !ref.current.contains(e.target)) {
