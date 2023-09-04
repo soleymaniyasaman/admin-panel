@@ -4,8 +4,20 @@ import Register, {
   registerAction,
 } from "./features/identity/components/register";
 import IdentityLayout from "./layouts/identity-layout";
+import MainLayout from "./layouts/main-layout";
+import Courses from "./pages/courses";
 
 const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <MainLayout />,
+    children: [
+      {
+        element: <Courses />,
+        index: true, // this is the default page of mainLayout (پیش فرض صفحه اصلی)
+      },
+    ],
+  },
   {
     element: <IdentityLayout />,
     children: [
