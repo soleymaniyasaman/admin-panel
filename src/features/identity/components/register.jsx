@@ -8,10 +8,9 @@ import {
   useSubmit,
 } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { httpService } from "../../../core/http-service";
+import { httpService } from "@core/http-service";
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { useAppContext } from "../../../context/app/app-context";
 
 const Register = () => {
   const {
@@ -21,24 +20,23 @@ const Register = () => {
     formState: { errors },
   } = useForm();
 
-  const submitForm = useSubmit();
+  const submitForm = useSubmit(); // connect registerAction with register by using react-router
   const onSubmit = (data) => {
     const { confirmPassword, ...userData } = data; // sever confirmData from whole data
     submitForm(userData, { method: "post" }); // submit form by using react-router-dom manually
   };
 
   const navigation = useNavigation();
+
   const isSubmitting = navigation.state !== "idle"; // if the state of navigation is submitting or loading then return true
 
   const isSuccessOperation = useActionData(); // useAction data return the data from registerAction that is defined in both router.jsx & register.jsx
 
   const navigate = useNavigate(); // navigate the route with coding instead of Link
 
-  const routerError = useRouteError(); // handle errors of the fetch api
+  const routeErrors = useRouteError(); // handle errors of the fetch api
 
   const { t } = useTranslation(); // use t for multi language
-
-  const { theme } = useAppContext();
 
   useEffect(() => {
     if (isSuccessOperation) {
@@ -70,7 +68,7 @@ const Register = () => {
                 <label className="form-label">{t("register.mobile")}</label>
                 <input
                   {...register("mobile", {
-                    required: t("register.validation.mobileRequired"),
+                    required: true,
                     minLength: 11,
                     maxLength: 11,
                   })}
@@ -80,7 +78,7 @@ const Register = () => {
                 />
                 {errors.mobile && errors.mobile.type === "required" && (
                   <p className="text-danger small fw-bold mb-1">
-                    {errors.mobile?.message}
+                    {t("register.validation.mobileRequired")}
                   </p>
                 )}
                 {errors.mobile &&
@@ -95,7 +93,7 @@ const Register = () => {
                 <label className="form-label">{t("register.password")}</label>
                 <input
                   {...register("password", {
-                    required: t("register.validation.passwordRequired"),
+                    required: true,
                   })}
                   className={`form-control form-control-lg ${
                     errors.password && "is-invalid"
@@ -104,7 +102,7 @@ const Register = () => {
                 />
                 {errors.password && errors.password.type === "required" && (
                   <p className="text-danger small fw-bold mb-1">
-                    {errors.password?.message}
+                    {t("register.validation.passwordRequired")}
                   </p>
                 )}
               </div>
@@ -114,7 +112,7 @@ const Register = () => {
                 </label>
                 <input
                   {...register("confirmPassword", {
-                    required: t("register.validation.repeatPasswordRequired"),
+                    required: true,
                     validate: (value) => {
                       if (watch("password") !== value) {
                         return t("register.validation.notMatching");
@@ -129,7 +127,7 @@ const Register = () => {
                 {errors.confirmPassword &&
                   errors.confirmPassword.type === "required" && (
                     <p className="text-danger small fw-bold mb-1">
-                      {errors.confirmPassword?.message}
+                      {t("login.validation.repeatPasswordRequired")}
                     </p>
                   )}
                 {errors.confirmPassword &&
@@ -153,11 +151,11 @@ const Register = () => {
                   {t("register.successOperation")}{" "}
                 </div>
               )}
-              {routerError && (
+              {routeErrors && (
                 <div className="alert alert-danger p-2 mt-3">
-                  {routerError.response?.data.map((error, index) => (
-                    <p key={index} className="mb-0">
-                      {error.description}
+                  {routeErrors.response?.data.map((error) => (
+                    <p className="mb-0">
+                      {t(`register.validation.${error.code}`)}
                     </p>
                   ))}
                 </div>
@@ -175,6 +173,6 @@ export default Register;
 export async function registerAction({ request }) {
   const formData = await request.formData(); // return key value data from the form
   const data = Object.fromEntries(formData); // object.fromEntries() convert key value to an object model
-  const response = await httpService.post("/users", data);
+  const response = await httpService.post("/Users", data);
   return response.status === 200;
 }

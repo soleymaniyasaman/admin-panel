@@ -33,7 +33,8 @@
     "validation": {
         "mobileRequired": "موبایل الزامی است",
         "passwordRequired": "رمز عبور الزامی است",
-        "IncorrectUserNameOrPassword": "موبایل یا رمز عبور صحیح نمی باشد"
+        "IncorrectUserNameOrPassword": "موبایل یا رمز عبور صحیح نمی باشد",
+        "mobileLength": "شماره موبایل باید 11 رقم باشد"
     }
   },
   "mainLayout": {
